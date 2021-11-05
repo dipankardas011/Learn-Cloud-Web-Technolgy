@@ -1,0 +1,84 @@
+<style>
+    h1 {
+        writing-mode: vertical-lr;
+        /* display: inline-flex; */
+        /* inline-size: 200px; */
+    }
+
+    .box {
+        border: 2px solid burlywood;
+        width: 150px;
+    }
+
+    .horizontal {
+        writing-mode: horizontal-tb;
+    }
+
+    .vertical {
+        writing-mode: vertical-rl;
+    }
+
+    .box {
+        inline-size: 200px;
+        writing-mode: horizontal-tb;
+    }
+
+    .logical {
+        margin-block-start: 20px;
+        padding-inline-end: 2em;
+        padding-block-start: 2px;
+        border-block-start: 5px solid pink;
+        border-inline-end: 10px dotted rebeccapurple;
+        border-block-end: 1em double orange;
+        border-inline-start: 1px solid black;
+    }
+
+    .physical {
+        margin-top: 20px;
+        padding-right: 2em;
+        padding-top: 2px;
+        border-top: 5px solid pink;
+        border-right: 10px dotted rebeccapurple;
+        border-bottom: 1em double orange;
+        border-left: 1px solid black;
+    }
+
+    h2 {
+        border-bottom: 5px solid rgba(129, 30, 30, 0.836);
+    }
+
+    /* .box {
+        inline-size: 200px;
+        writing-mode: vertical-rl;
+        writing-mode: vertical-lr;
+    }
+
+    img {
+        float: inline-start;
+        margin-inline-end: 10px;
+        margin-block-end: 10px;
+    } */
+</style>
+
+<h1>Made in India</h1>
+
+<br>
+<div class="wrapper">
+    <div class="box physical">
+        <h2>Physical Properties</h2>
+        <p>A paragraph. Demonstrating Logical Properties in CSS.</p>
+    </div>
+    <div class="box logical">
+        <h2>Logical Properties</h2>
+        <p>A paragraph. Demonstrating Logical Properties in CSS.</p>
+    </div>
+</div>
+
+
+<div class="wrapper">
+    <div class="box logical">
+        <img src="big-star.png" alt="star">
+        <p>This box uses logical properties. The star image has been floated inline-start, it also has a margin on the
+            inline-end and block-end.</p>
+    </div>
+</div>

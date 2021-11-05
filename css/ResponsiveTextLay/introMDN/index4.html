@@ -1,0 +1,77 @@
+<style>
+    .container {
+        border-top: 15px dotted green;
+        border-right: 1px solid black;
+        border-bottom: 25px double rgb(23, 45, 145);
+    }
+
+    .box {
+        border: 1px solid #333333;
+        border-radius: 100px;
+        border-top-style: dotted;
+        border-right-width: 20px;
+        border-bottom-color: hotpink;
+    }
+
+    .box {
+        background: linear-gradient(105deg, rgba(255, 255, 255, .2) 39%, rgba(51, 56, 57, 1) 96%) center center / 400px 200px no-repeat,
+            url(big-star.png) center no-repeat, rebeccapurple;
+    }
+
+
+    span {
+        margin: 20px;
+        padding: 20px;
+        width: 80px;
+        height: 50px;
+        background-color: lightblue;
+        border: 2px solid blue;
+        display: inline-block;
+    }
+</style>
+<div class="container">
+    <div class="box">Change my borders.</div>
+</div>
+
+<br>
+<p>
+    I am a paragraph and this is a <span>span</span> inside that paragraph. A span is an inline element and so does not
+    respect width and height.
+</p>
+<style>
+    .links-list a {
+        background-color: rgb(179, 57, 81);
+        color: #fff;
+        text-decoration: none;
+        padding: 1em 2em;
+        display: inline-flex;
+        /* display: flex; */
+        list-style: none;
+    }
+    
+    .links-list a:hover {
+        background-color: rgb(66, 28, 40);
+        color: #fff;
+    }
+    .stars {
+        background-image: url(css\ResponsiveTextLay\introMDN\star.png);
+        background-repeat: no-repeat;
+    }
+    .ballon {
+        background-image: url(../css/ResponsiveTextLay/introMDN/balloons.jpg);
+        background-repeat: no-repeat;
+        background-size: 300px 16em;
+    }
+</style>
+
+
+<nav>
+    <ul class="links-list">
+        <li><a href="">Link one</a></li>
+        <li><a href="">Link two</a></li>
+        <li><a href="">Link three</a></li>
+    </ul>
+</nav>
+
+<div class="stars"></div>
+<div class="ballon"></div>
