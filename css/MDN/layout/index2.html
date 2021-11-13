@@ -1,0 +1,32 @@
+<style>
+    .wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 100px 100px;
+        grid-gap: 10px;
+    }
+
+    .box1 {
+        background-color: aqua;
+        grid-column: 2 / 4;
+        grid-row: 2;
+    }
+
+    .box2 {
+        background-color: aquamarine;
+        grid-column: 1;
+        grid-row: 1 / 3;
+    }
+
+    .box3 {
+        background-color: yellowgreen;
+        grid-row: 1;
+        grid-column: 3;
+    }
+</style>
+
+<div class="wrapper">
+    <div class="box1">One</div>
+    <div class="box2">Two</div>
+    <div class="box3">Three</div>
+</div>
