@@ -1,5 +1,9 @@
 # Your tasks
 
+
+![](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Fundamental_Layout_Comprehension/layout-task-complete.png)
+
+![](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Fundamental_Layout_Comprehension/layout-task-start.png)
 You now need to implement your layout. The tasks you need to achieve are:
 
 1. To display the navigation items in a row, with an equal amount of space between the items.
