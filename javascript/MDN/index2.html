@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <title>Apply JavaScript example</title>
+</head>
+
+<body>
+    <button>Click me</button>
+</body>
+
+<!-- we can use the extrnal script -->
+<!-- <script src="script.js" defer></script> -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        function createParagraph() {
+            const para = document.createElement('p');
+            para.textContent = 'You clicked the button!';
+            document.body.appendChild(para);
+        }
+
+        const buttons = document.querySelectorAll('button');
+
+        for (const button of buttons) {
+            button.addEventListener('click', createParagraph);
+        }
+    });
+
+</script>
+
+<!-- 
+document.addEventListener('DOMContentLoaded', () => {
+  ...
+});
+this enables the javascript to load after the html and the css has loaded&parsed
+ Scripts loaded using the async attribute will 
+ download the script without blocking the page while the 
+ script is being fetched. However, once the download is 
+ complete, the script will execute, which blocks the page 
+ from rendering. You get no guarantee that scripts will 
+ run in any specific order. It is best to use async when 
+ the scripts in the page run independently from each other and depend on no other script on the page.
+
+Scripts loaded with the defer attribute 
+will load in the order they appear on the page. 
+They won't run until the page content has all loaded, 
+which is useful if your scripts depend on the DOM being in 
+place (e.g. they modify one or more elements on the page). 
+ -->
+
+</html>
