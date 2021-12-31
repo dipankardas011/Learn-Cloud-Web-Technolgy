@@ -12,6 +12,35 @@
 
 <!-- we can use the extrnal script -->
 <!-- <script src="script.js" defer></script> -->
+<!-- https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/What_is_JavaScript/async-defer.jpg -->
+
+<!-- 
+async should be used when you have a bunch of background scripts to load in, 
+and you just want to get them in place as soon as possible. For example, maybe you have some game data files to load, 
+which will be needed when the game actually begins, but for now you just want to get on with showing the game intro, titles, and lobby, 
+without them being blocked by script loading. 
+<script async src="js/vendor/jquery.js"></script>
+
+<script async src="js/script2.js"></script>
+
+<script async src="js/script3.js"></script>
+
+
+
+Scripts loaded using the defer attribute (see below) will run in the order they appear in the page and execute them as soon as the script and content are downloaded:
+
+<script defer src="js/vendor/jquery.js"></script>
+
+<script defer src="js/script2.js"></script>
+
+<script defer src="js/script3.js"></script>
+In the second example, we can be sure that jquery.js will load before script2.js and script3.js and that script2.js 
+will load before script3.js. They won't run until the page 
+content has all loaded, which is useful if your scripts depend on the DOM being in place (e.g. 
+they modify one of more elements on the page). 
+ -->
+
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         function createParagraph() {
@@ -19,7 +48,12 @@
             para.textContent = 'You clicked the button!';
             document.body.appendChild(para);
         }
-
+        /*
+          1. Get references to all the buttons on the page in an array format.
+          2. Loop through all the buttons and add a click event listener to each one.
+            
+          When any button is pressed, the createParagraph() function will be run.
+        */
         const buttons = document.querySelectorAll('button');
 
         for (const button of buttons) {
