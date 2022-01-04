@@ -29,3 +29,8 @@ console.log(PIE, camper);
  * there is 
  * += , -=, *= , /= and the ++ , --
  */
+
+const myStr = '<a href="http://www.example.com" target="_blank">Link</a>';
+
+const myStr = 'FirstLine\n\t\\SecondLine\nThirdLine';
+console.log(myStr);
