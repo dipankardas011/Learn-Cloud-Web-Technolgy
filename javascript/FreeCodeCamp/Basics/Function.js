@@ -27,3 +27,8 @@ function fun2() {
 }
 fun1();
 fun2();
+
+let str = "wr4rfr";
+let num = 234;
+console.log(typeof str);
+console.log(typeof num);
