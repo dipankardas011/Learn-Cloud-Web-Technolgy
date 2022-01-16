@@ -1,5 +1,13 @@
 
 function addition(a, b) {
+    const A = '1';
+    
+    console.log(Number(A));
+    if (A <= 1) {
+        console.log("'1' <= 1");
+    } else {
+        console.log("'1' > 1");
+    }
     console.log(a+b);
 }
 

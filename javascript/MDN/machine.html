@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine</title>
+</head>
+<body>
+
+    <button>Start Machine</button>
+    <p>The Machine is Stopped.</p>
+
+    <script defer>
+        const button = document.querySelector('button');
+        const txt = document.querySelector('p');
+
+        button.addEventListener('click', () => {
+            if (button.textContent === 'Start Machine') {
+                button.textContent = 'Stop Machine';
+                txt.textContent = 'The machine has started!!';
+            } else {
+                button.textContent = 'Start Machine';
+                txt.textContent = 'The machine has stopped!!';
+            }
+        });
+    </script>
+</body>
+</html>
