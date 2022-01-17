@@ -1,0 +1,12 @@
+command:
+  - sh
+  - -c
+  - |
+    #!/usr/bin/env bash -e
+    http () {
+        local path="${1}"
+        set -- -XGET -s --fail
+        # some more stuff here
+        curl -k "$@" "http://localhost:5601${path}"
+    }
+    http "/app/kibana"

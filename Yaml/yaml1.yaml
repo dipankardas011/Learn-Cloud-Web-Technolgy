@@ -1,0 +1,24 @@
+microservice:
+  app: "user-authentication"
+  # the string can be "" '' or nothing
+  port: 9000
+  version: 1.7
+
+# list 
+microservices:
+  # items in list
+  - app: "user-authentication"
+    port: 9000
+    version: 1.7
+    deployed: true # on/off yes/no true/false
+  - app: "shopping-cart"
+    port: 9002
+    version:
+      - 9.1
+      - 2.3
+      - 4.5
+    # version: [1.9, 2.1, 3.4]
+
+microservicesN:
+  - "user-authentication"
+  - "shopping-cart"
