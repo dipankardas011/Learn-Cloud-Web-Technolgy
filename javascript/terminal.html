@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/jquery.terminal/js/jquery.terminal.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/jquery.terminal/css/jquery.terminal.min.css" />
+</head>
+
+<body>
+    <script>
+        $('body').terminal
+        ({
+            hello: function (what) {
+                this.echo('Hello, ' + what +
+                    '. Wellcome to this terminal.');
+            },
+            neofetch: function () {
+                this.echo('MyOS ver: 0.1.1v');
+            },
+            cp: function (src, dest) {
+                this.echo('copied ' + src + ' -> ' + dest);
+            },
+            man: function (what) {
+                if (what === 'ls') {
+                    this.echo('drwx--x--- 4 16th Jan 4096 a.cpp');
+                } else {
+                    this.echo('no entry found');
+                }
+            },
+            exit: function () {
+                this.echo('EXITED PID 1001');
+            }
+        },
+        {
+            greetings: 'My First Web Terminal'
+        });
+    </script>
+</body>
+
+</html>
