@@ -77,3 +77,168 @@ exits with a non-zero exit status more than 10 times
 in a row Docker will abort trying to restart the container. 
 Providing a maximum restart limit is only valid for the on-failure policy.
 
+# exit status
+The exit code from docker run gives information about why the container 
+failed to run or why it exited. When docker run exits with a non-zero code, 
+the exit codes follow the chroot standard,
+
+- 125 if the error is with docker daemon
+eg $ docker run --foo busybox; echo $?
+
+- 126 if the contained command cannot be invoked
+eg $ docker run busybox /etc; echo $?
+
+- 127 if the contained command cannot be found
+eg $ docker run busybox foo; echo $?
+
+EXIT code of contained command otherwise
+$ docker run busybox /bin/sh -c 'exit 3'
+
+$ docker run -it -m 300M --memory-swap -1 ubuntu:14.04 /bin/bash
+We set memory limit and disabled swap memory limit, this means the processes in the 
+container can use 300M memory and as much swap memory as they need (if the host
+ supports swap memory).
+
+$ docker run -it -m 300M ubuntu:14.04 /bin/bash
+We set memory limit only, this means the processes in the container can use 
+300M memory and 300M swap memory, by default, the total virtual memory 
+size (--memory-swap) will be set as double of memory, in this case, 
+memory + swap would be 2*300M, so processes can use 300M swap memory as well.
+
+$ docker run -it -m 300M --memory-swap 1G ubuntu:14.04 /bin/bash
+We set both memory and swap memory, so the processes in 
+the container can use 300M memory and 700M swap memory.
+
+$ docker run -it -m 500M --memory-reservation 200M ubuntu:14.04 /bin/bash
+Under this configuration, when the container consumes memory more than 200M 
+and less than 500M, the next system memory reclaim attempts to 
+shrink container memory below 200M.
+
+The following example set memory reservation to 1G without a hard memory limit.
+
+$ docker run -it --memory-reservation 1G ubuntu:14.04 /bin/bash
+The container can use as much memory as it needs. The memory reservation 
+setting ensures the container doesn’t consume too much memory for long 
+time, because every memory reclaim shrinks the container’s consumption to the reservation.
+
+By default, kernel kills processes in a container if an out-of-memory (OOM) error occurs. 
+To change this behaviour, use the --oom-kill-disable option.
+
+$ docker run -it -m 100M --oom-kill-disable ubuntu:14.04 /bin/bash
+
+$ docker run -it -m 500M --kernel-memory 50M ubuntu:14.04 /bin/bash
+We set memory and kernel memory, so the processes in the container can use 
+500M memory in total, in this 500M memory, it can be 50M kernel memory tops.
+
+$ docker run -it --kernel-memory 50M ubuntu:14.04 /bin/bash
+We set kernel memory without -m, so the processes in the container can use 
+as much memory as they want, but they can only use 50M kernel memory.
+
+The default CPU CFS (Completely Fair Scheduler) period is 100ms. We can use 
+--cpu-period to set the period of CPUs to limit the container’s CPU usage. 
+And usually --cpu-period should work with --cpu-quota.
+
+Examples:
+
+ docker run -it --cpu-period=50000 --cpu-quota=25000 ubuntu:14.04 /bin/bash
+If there is 1 CPU, this means the container can get 50% CPU worth of run-time every 50ms.
+
+In addition to use --cpu-period and --cpu-quota for setting CPU period 
+constraints, it is possible to specify --cpus with a float number to achieve 
+the same purpose. For example, if there is 1 CPU, then --cpus=0.5 will 
+achieve the same result as setting --cpu-period=50000 and --cpu-quota=25000 (50% CPU).
+
+Both flags support the value ALL, so to allow a container to use all capabilities except for MKNOD:
+
+$ docker run --cap-add=ALL --cap-drop=MKNOD ...
+The --cap-add and --cap-drop flags accept capabilities to be specified with a 
+CAP_ prefix. The following examples are therefore equivalent:
+
+$ docker run --cap-add=SYS_ADMIN ...
+$ docker run --cap-add=CAP_SYS_ADMIN ...
+For interacting with the network stack, instead of using --privileged they 
+should use --cap-add=NET_ADMIN to modify the network interfaces.
+
+$ docker run -it --rm  ubuntu:14.04 ip link add dummy0 type dummy
+$ docker run -it --rm --cap-add=NET_ADMIN ubuntu:14.04 ip link add dummy0 type dummy
+
+The default value for --cpus is 0.000, which means there is no limit.
+
+Four of the Dockerfile commands cannot be overridden at runtime: FROM, MAINTAINER, RUN, and ADD. 
+Everything else has a corresponding override in docker run. 
+We’ll go through what the developer might have set in each Dockerfile 
+instruction and how the operator can override that setting.
+
+The ENTRYPOINT of an image is similar to a COMMAND because it specifies what executable to run 
+when the container starts, but it is (purposely) more difficult to override. The ENTRYPOINT 
+gives a container its default nature or behavior, so that when you set an ENTRYPOINT 
+you can run the container as if it were that binary, complete with default options, 
+and you can pass in more options via the COMMAND. But, sometimes an operator may 
+want to run something else inside the container, so you can override the default 
+ENTRYPOINT at runtime by using a string to specify the new ENTRYPOINT. Here is an 
+example of how to run a shell in a container that has been set up to automatically 
+run something else (like /usr/bin/redis-server):
+
+$ docker run -it --entrypoint /bin/bash example/redis
+or two examples of how to pass more parameters to that ENTRYPOINT:
+
+$ docker run -it --entrypoint /bin/bash example/redis -c ls -l
+$ docker run -it --entrypoint /usr/bin/redis-cli example/redis --help
+You can reset a containers entrypoint by passing an empty string, for example:
+
+$ docker run -it --entrypoint="" mysql bash
+
+--expose=[]: Expose a port or a range of ports inside the container.
+             These are additional to those exposed by the `EXPOSE` instruction
+-P         : Publish all exposed ports to the host interfaces
+-p=[]      : Publish a container's port or a range of ports to the host
+               format: ip:hostPort:containerPort | ip::containerPort | hostPort:containerPort | containerPort
+               Both hostPort and containerPort can be specified as a
+               range of ports. When specifying ranges for both, the
+               number of container ports in the range must match the
+               number of host ports in the range, for example:
+                   -p 1234-1236:1234-1236/tcp
+
+               When specifying a range for hostPort only, the
+               containerPort must not be a range.  In this case the
+               container port is published somewhere within the
+               specified hostPort range. (e.g., `-p 1234-1236:1234/tcp`)
+
+The port number inside the container (where the service listens) does not need to match the 
+port number exposed on the outside of 
+the container (where clients connect). For example, inside the container an HTTP service is listening 
+on port 80 (and so the image developer specifies EXPOSE 80 in the Dockerfile). 
+At runtime, the port might be bound to 42800 on the host. To find the 
+mapping between the host ports and the exposed ports, use docker port.
+
+  --health-cmd            Command to run to check health
+  --health-interval       Time between running the check
+  --health-retries        Consecutive failures needed to report unhealthy
+  --health-timeout        Maximum time to allow one check to run
+  --health-start-period   Start period for the container to initialize before starting health-retries countdown
+  --no-healthcheck        Disable any container-specified HEALTHCHECK
+
+$ docker run --name=test -d \
+    --health-cmd='stat /etc/passwd || exit 1' \
+    --health-interval=2s \
+    busybox sleep 1d
+$ sleep 2; docker inspect --format='{{.State.Health.Status}}' test
+$ docker exec test rm /etc/passwd
+$ sleep 2; docker inspect --format='{{json .State.Health}}' test
+
+TMPFS (mount tmpfs filesystems)
+The example below mounts an empty tmpfs into the container with the rw, noexec, nosuid, and size=65536k options.
+
+$ docker run -d --tmpfs /run:rw,noexec,nosuid,size=65536k my_image
+
+root (id = 0) is the default user within a container. The image developer can create additional users. 
+Those users are accessible by name. When passing a numeric ID, the user does not have to exist in the container.
+
+The developer can set a default user to run the first process with the Dockerfile USER instruction. 
+When starting a container, the operator can override the USER instruction by passing the -u option.
+
+-u="", --user="": Sets the username or UID used and optionally the groupname or GID for the specified command.
+
+The followings examples are all valid:
+--user=[ user | user:group | uid | uid:gid | user:gid | uid:group ]
+
