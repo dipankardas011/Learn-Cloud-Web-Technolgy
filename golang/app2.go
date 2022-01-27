@@ -16,6 +16,34 @@ func print(x bool) {
 	fmt.Println("Name:", first, last, x)
 }
 
+func loops(N int) {
+	var sum int = 0
+	for i := 0; i < N; i++ {
+		sum += i
+	}
+	fmt.Println("Sum: ", sum)
+
+	sum = 0
+
+	//	while loop
+	i := 0
+	for i < N {
+		sum += i
+		i++
+	}
+	fmt.Println("Sum: ", sum)
+
+	//	do while not there
+	//	infinite loop
+	for {
+		if i == 100 {
+			fmt.Println("Break cond.. ", i)
+			return
+		}
+		i++
+	}
+}
+
 func main() {
 	var aa int
 	fmt.Println(aa)
@@ -34,4 +62,6 @@ func main() {
 	print(true)
 
 	fmt.Println(namedRet(15))
+
+	loops(10)
 }
