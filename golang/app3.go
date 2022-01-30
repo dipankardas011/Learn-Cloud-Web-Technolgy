@@ -22,6 +22,47 @@ func moreOnLoops() {
 	}
 }
 
+func switchStatements(c byte) byte {
+	switch {
+	case '0' <= c && c <= '9':
+		return c - '0'
+	case 'a' <= c && c <= 'f':
+		return c - 'a' + 10
+	case 'A' <= c && c <= 'F':
+		return c - 'A' + 10
+	}
+	return 0
+}
+
+func switchStatementsv2() {
+outerloop:
+	for i := 0; i < 10; i++ {
+		switch {
+		case i&1 == 1:
+			continue outerloop
+		}
+		fmt.Printf("[%v]\n", i)
+	}
+}
+
+func Compare(a, b []byte) int {
+	for i := 0; i < len(a) && i < len(b); i++ {
+		switch {
+		case a[i] > b[i]:
+			return 1
+		case a[i] < b[i]:
+			return -1
+		}
+	}
+	switch {
+	case len(a) > len(b):
+		return 1
+	case len(a) < len(b):
+		return -1
+	}
+	return 0
+}
+
 func main() {
 	fmt.Printf("Type: %T value: %v\n", flag, flag)
 	fmt.Printf("Type: %T value: %v\n", PID, PID)
@@ -34,4 +75,7 @@ func main() {
 	fmt.Printf("%v %v %v %q\n", i, f, b, s)
 
 	moreOnLoops()
+	switchStatements('x')
+	switchStatementsv2()
+
 }
