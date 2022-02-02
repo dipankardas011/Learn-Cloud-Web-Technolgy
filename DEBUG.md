@@ -41,3 +41,7 @@ If you can't work out what every error message means, don't worry about it — a
 You will know when all your errors are fixed when you see the following banner in your output:
 
 Banner that reads "The document validates according to the specified schema(s) and to additional constraints checked by the validator." 
+
+## for icons
+The warning and chat icons were originally found on 
+[iconfinder.com](https://www.iconfinder.com/)
