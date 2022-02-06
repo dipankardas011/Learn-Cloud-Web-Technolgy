@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dad</title>
+</head>
+
+<body>
+
+  <body>
+    <div id="container">
+      <button>Click me!</button>
+    </div>
+    <pre id="output"></pre>
+    <pre>
+      In this case:
+
+        the click on the button fires first
+        followed by the click on its parent (the <div> element)
+        followed by the <div> element's parent (the <body> element).
+
+      We describe this by saying that the event bubbles up from the innermost element that was clicked.
+    </pre>
+
+    <script>
+      const output = document.querySelector('#output');
+      function handleClick(e) {
+        output.textContent += `You clicked on a ${e.currentTarget.tagName} element\n`;
+      }
+
+      const container = document.querySelector('#container');
+      const button = document.querySelector('button');
+
+      document.body.addEventListener('click', handleClick);
+      container.addEventListener('click', handleClick);
+      button.addEventListener('click', handleClick);
+
+    </script>
+
+  </body>
+
+</html>

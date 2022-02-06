@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ddd</title>
 </head>
+
 <body>
   <button>Change color</button>
   <div class="hh" style="background-color: aqua;">Hover Over me</div>
@@ -15,7 +17,7 @@
     const dd = document.querySelector('.hh');
 
     function Random(n) {
-      return (Math.random()*n)+1;
+      return (Math.random() * n) + 1;
     }
     /**
     
@@ -25,15 +27,50 @@
 
      */
 
-    btn.addEventListener('click', ()=>{
+    btn.addEventListener('click', () => {
       const rgb = `rgb(${Random(255)}, ${Random(255)}, ${Random(255)})`
-      document.body.style.backgroundColor=rgb;
+      document.body.style.backgroundColor = rgb;
     })
 
-    dd.addEventListener('mouseover', ()=>{
+    dd.addEventListener('mouseover', () => {
       const rgb = `rgb(${Random(255)}, ${Random(255)}, ${Random(255)})`
-      document.body.style.backgroundColor=rgb;
+      document.body.style.backgroundColor = rgb;
     })
+
+    // // Event handlers can also be removed by passing an 
+    // // AbortSignal to addEventListener() and then later calling abort() 
+    // // on the controller owning the AbortSignal. For example, to add
+    // // an event handler that we can remove with an AbortSignal: 
+    // const controller = new AbortController();
+    // btn.addEventListener('click', () => {
+    //   const rgb = `rgb(${Random(255)}, ${Random(255)}, ${Random(255)})`
+    //   document.body.style.backgroundColor = rgb;
+    // }, { signal: controller.signal });
+    // // controller.abort();
+
+    // //-----------------------------------------------
+    // // Event handler properties
+    // btn.onclick = () => {
+    //   // ....
+    // }
+    // // OR by
+    // function bgChange() {
+    //   //....
+    // }
+    // btn.onclick = bgChange;
+
+    // // Inline handler properties
+    // // writing the event in side the html
+    // <button onclick="bgChange()">Press me</button>
+    // //--------------------------------------------------
+    // // using objects
+    // function bgChange(e) {
+    //   e.target.style.backgroundColor = rgb;
+    //   console.log(e);
+    // }
+    // btn.addEventListener('click', bgChange);
+
   </script>
 </body>
+
 </html>
