@@ -40,6 +40,20 @@ func timming() {
 	}
 }
 
+func deferringAMethod() {
+	var num int32
+	num = 5
+	fmt.Println(num)
+
+	for i := 0; i < 10; i++ {
+		defer fmt.Println(i)
+	}
+
+	defer fmt.Println("This Statement is going to be evaluated at the last")
+
+	fmt.Println("Second last")
+}
+
 func main() {
 	var i int = 43
 	var f float64 = float64(i)
@@ -58,4 +72,6 @@ func main() {
 	fmt.Println(needInt(SMALL))
 	fmt.Println(needFloat(SMALL))
 	timming()
+
+	deferringAMethod()
 }
