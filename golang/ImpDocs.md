@@ -136,3 +136,9 @@ The deferred call's arguments are evaluated immediately, but the function
 call is not executed until the surrounding function returns
 Deferred function calls are pushed onto a stack. When a function returns, 
 its deferred calls are executed in last-in-first-out order.
+
+## Pointer
+Unlike C, Go has no pointer arithmetic .
+To access the field X of a struct when we have the struct pointer p we could write (*p).X. 
+However, that notation is cumbersome, so the language 
+permits us instead to write just p.X, without the explicit dereference.
