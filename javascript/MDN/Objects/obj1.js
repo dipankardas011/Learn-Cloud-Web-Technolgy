@@ -9,6 +9,8 @@ const person = {
   }
 };
 
+console.log(Object.getPrototypeOf(person))
+
 person.name
 person.name[0]
 person.age
