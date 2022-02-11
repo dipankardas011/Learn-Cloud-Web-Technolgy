@@ -142,3 +142,36 @@ Unlike C, Go has no pointer arithmetic .
 To access the field X of a struct when we have the struct pointer p we could write (*p).X. 
 However, that notation is cumbersome, so the language 
 permits us instead to write just p.X, without the explicit dereference.
+
+## Slices
+An array has a fixed size. A slice, on the other hand, is a dynamically-sized, flexible view into the elements of an array. In practice, slices are much more common than arrays.
+
+The type []T is a slice with elements of type T.
+
+A slice is formed by specifying two indices, a low and high bound, separated by a colon:
+```go
+a[low : high]
+```
+This selects a half-open range which includes the first element, but excludes the last one.
+
+The following expression creates a slice which includes elements 1 through 3 of a:
+```go
+a[1:4]
+```
+
+A slice does not store any data, it just describes a section of an underlying array.
+
+Changing the elements of a slice modifies the corresponding elements of its underlying array.
+
+Other slices that share the same underlying array will see those changes.
+
+these slice expressions are equivalent:
+```go
+a[0:10]
+a[:10]
+a[0:]
+a[:]
+```
+The length of a slice is the number of elements it contains.
+
+The capacity of a slice is the number of elements in the underlying array, counting from the first element in the slice.
