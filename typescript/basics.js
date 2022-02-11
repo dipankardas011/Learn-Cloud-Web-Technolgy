@@ -1,10 +1,5 @@
 var nam = "Dipankar Das";
 console.log(nam);
-/*javascript style */
-// const user = {
-//   name: "Dipankar",
-//   id: 23232
-// };
 var user = {
     name: "Dipankar",
     id: 324324,
@@ -17,7 +12,24 @@ var UserAccount = /** @class */ (function () {
         this.id = id;
         this.age = age;
     }
+    UserAccount.prototype.getID = function () {
+        return this.id;
+    };
     return UserAccount;
 }());
-var usr = new UserAccount("Dipankkkkkkk", 3432423, 34);
+var usr = new UserAccount("Dipankar Das", 3432423, 34);
 console.log(usr);
+console.log(usr.getID());
+function getLength(obj) {
+    return obj.length;
+}
+console.log(getLength("ABDBDBD"));
+console.log(getLength(["abcd", "dcds"]));
+function wrapInArray(obj) {
+    if (typeof obj === "string") {
+        return [obj];
+    }
+    return obj;
+}
+console.log(wrapInArray("ssss"));
+console.log(wrapInArray(["ssss", "sdfs", "SDfs"]));
