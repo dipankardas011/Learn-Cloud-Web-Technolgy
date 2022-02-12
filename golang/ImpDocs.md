@@ -175,3 +175,17 @@ a[:]
 The length of a slice is the number of elements it contains.
 
 The capacity of a slice is the number of elements in the underlying array, counting from the first element in the slice.
+
+Slices can be created with the built-in make function; this is how you create dynamically-sized arrays.
+
+The make function allocates a zeroed array and returns a slice that refers to that array:
+```go
+a := make([]int, 5)  // len(a)=5
+```
+To specify a capacity, pass a third argument to make:
+```go
+b := make([]int, 0, 5) // len(b)=0, cap(b)=5
+
+b = b[:cap(b)] // len(b)=5, cap(b)=5
+b = b[1:]      // len(b)=4, cap(b)=4
+```
