@@ -189,3 +189,7 @@ b := make([]int, 0, 5) // len(b)=0, cap(b)=5
 b = b[:cap(b)] // len(b)=5, cap(b)=5
 b = b[1:]      // len(b)=4, cap(b)=4
 ```
+
+The resulting value of append is a slice containing all the elements of the original slice plus the provided values.
+
+If the backing array of s is too small to fit all the given values a bigger array will be allocated. The returned slice will point to the newly allocated array.
