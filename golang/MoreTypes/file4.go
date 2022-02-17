@@ -24,6 +24,34 @@ func slices() {
 	}
 }
 
+func ranger() {
+	var pow = []int{1, 2, 4, 8}
+	for i, v := range pow {
+		fmt.Printf("2**%d = %d\n", i, v)
+	}
+
+	// by skipping the index
+	for _, value := range pow {
+		fmt.Printf("%d\n", value)
+	}
+
+	// this will print the index
+	for i := range pow {
+		fmt.Println(i)
+	}
+
+	//	more range use
+	powee := make([]int, 10)
+	for i := range powee {
+		powee[i] = 1 << i
+	}
+
+	for _, value := range powee {
+		fmt.Println(value)
+	}
+}
+
 func main() {
 	slices()
+	ranger()
 }
