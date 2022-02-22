@@ -193,3 +193,9 @@ b = b[1:]      // len(b)=4, cap(b)=4
 The resulting value of append is a slice containing all the elements of the original slice plus the provided values.
 
 If the backing array of s is too small to fit all the given values a bigger array will be allocated. The returned slice will point to the newly allocated array.
+
+## Function closures
+Go functions may be closures. A closure is a function value that references variables from outside its body. The function may access and assign to the referenced variables; in this sense the function is "bound" to the variables.
+
+For example, the adder function returns a closure. Each closure is bound to its own sum variable.
+
