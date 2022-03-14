@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clock</title>
+</head>
+<style>
+  body {
+    background: #000;
+    color: aqua;
+    font-size: xxx-large;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+</style>
+
+<body>
+
+  <div id="demo"></div>
+
+  <script defer>
+    function displayTime() {
+      let date = new Date();
+      let time = date.toLocaleTimeString();
+      document.getElementById('demo').textContent = time;
+    }
+
+    const createClock = setInterval(displayTime, 1000);
+
+  </script>
+</body>
+
+</html>

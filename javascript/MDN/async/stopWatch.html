@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StopWatch</title>
+</head>
+<style>
+  body {
+    background: #000;
+    color: aqua;
+    font-size: xxx-large;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  .Start, .Stop, .Reset {
+    background: aqua;
+    border: 5px solid aquamarine;
+  }
+  .Start :hover, .Stop :hover, .Reset :hover {
+    background: rgb(20, 175, 175);
+  }
+</style>
+
+<body>
+
+  <h1 style="font-size: x-large;">StopWatch</h1>
+  <hr>
+  <div id="demo"></div>
+  <button class="Start">Start</button>
+  <button class="Stop">Stop</button>
+  <button class="Reset">Restart</button>
+
+  <script defer>
+    let seconds = 0;
+    let start = document.querySelector(".Start");
+    let stop = document.querySelector(".Stop");
+    let reset = document.querySelector(".Reset");
+    let createClock ;
+    function displayTime() {
+      document.getElementById('demo').textContent = seconds;
+      seconds++;
+    }
+
+    start.addEventListener('click', () => {
+      createClock = setInterval(displayTime, 1000);
+      start.disabled = true;
+    })
+
+    stop.addEventListener('click', () => {
+      clearInterval(createClock);
+      start.disabled = false;
+    })
+
+    reset.addEventListener('click', ()=> {
+      start.disabled = false;
+      seconds = 0;
+      displayTime();
+      seconds--;
+    })
+
+
+  </script>
+</body>
+
+</html>
