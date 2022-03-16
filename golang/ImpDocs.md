@@ -234,3 +234,87 @@ v.Scale(5)  // OK
 p := &v
 p.Scale(10) // OK
 For the statement v.Scale(5), even though v is a value and not a pointer, the method with the pointer receiver is called automatically. That is, as a convenience, Go interprets the statement v.Scale(5) as (&v).Scale(5) since the Scale method has a pointer receiver.
+
+
+## 	Interfaces
+An interface type is defined as a set of method signatures.
+
+A value of interface type can hold any value that implements those methods.
+
+## Interfaces are implemented implicitly
+A type implements an interface by implementing its methods. There is no explicit declaration of intent, no "implements" keyword.
+
+Implicit interfaces decouple the definition of an interface from its implementation, which could then appear in any package without prearrangement.
+
+```go
+type I interface {
+	M()
+}
+
+type T struct {
+	S string
+}
+
+// This method means type T implements the interface I,
+// but we don't need to explicitly declare that it does so.
+func (t T) M() {
+	fmt.Println(t.S)
+}
+
+func main() {
+	var i I = T{"hello"}
+	i.M()
+}
+```
+
+Under the hood, interface values can be thought of as a tuple of a value and a concrete type:
+
+(value, type)
+An interface value holds a value of a specific underlying concrete type.
+
+## Interface values with nil underlying values
+If the concrete value inside the interface itself is nil, the method will be called with a nil receiver.
+
+In some languages this would trigger a null pointer exception, but in Go it is common to write methods that gracefully handle being called with a nil receiver (as with the method M in this example.)
+
+## The empty interface 🎉
+The interface type that specifies zero methods is known as the empty interface:
+
+interface{}
+An empty interface may hold values of any type. (Every type implements at least zero methods.)
+
+Empty interfaces are used by code that handles values of unknown type. For example, fmt.Print takes any number of arguments of type interface{}.
+
+
+## Stringers
+One of the most ubiquitous interfaces is Stringer defined by the fmt package.
+
+type Stringer interface {
+String() string
+}
+A Stringer is a type that can describe itself as a string. The fmt package (and many others) look for this interface to print values.
+
+## Errors
+Go programs express error state with error values.
+
+The error type is a built-in interface similar to fmt.Stringer:
+
+```go
+type error interface {
+Error() string
+}
+
+```
+(As with fmt.Stringer, the fmt package looks for the error interface when printing values.)
+
+Functions often return an error value, and calling code should handle errors by testing whether the error equals nil.
+```go
+
+i, err := strconv.Atoi("42")
+if err != nil {
+fmt.Printf("couldn't convert number: %v\n", err)
+return
+}
+fmt.Println("Converted integer:", i)
+```
+A nil error denotes success; a non-nil error denotes failure.
