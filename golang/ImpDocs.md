@@ -452,3 +452,27 @@ Go's standard library provides mutual exclusion with sync.Mutex and its two meth
 We can define a block of code to be executed in mutual exclusion by surrounding it with a call to Lock and Unlock as shown on the Inc method.
 
 We can also use defer to ensure the mutex will be unlocked as in the Value method.
+
+
+# Where to Go from here...
+You can get started by installing Go.
+[GO documentations](https://go.dev/doc/)
+[how to write go code](https://go.dev/doc/code)
+[Package reference](https://go.dev/pkg/)
+[language spec](https://go.dev/ref/spec)
+
+Once you have Go installed, the Go Documentation is a great place to continue. It contains references, tutorials, videos, and more.
+
+To learn how to organize and work with Go code, read How to Write Go Code.
+
+If you need help with the standard library, see the package reference. For help with the language itself, you might be surprised to find the Language Spec is quite readable.
+
+To further explore Go's concurrency model, watch [Go Concurrency Patterns (slides)](https://www.youtube.com/watch?v=f6kdp27TYZs) and [Advanced Go Concurrency Patterns (slides)](https://www.youtube.com/watch?v=QDDwwePbDtw) and read the [Share Memory by Communicating codewalk](https://go.dev/doc/codewalk/sharemem/).
+
+To get started writing web applications, watch [A simple programming environment (slides)](https://vimeo.com/53221558) and read the [Writing Web Applications tutorial](https://go.dev/doc/articles/wiki/)
+
+The [First Class Functions in Go codewalk](https://go.dev/doc/codewalk/functions/) gives an interesting perspective on [Go's function types](https://go.dev/blog/)
+
+The Go Blog has a large archive of informative Go articles.
+
+Visit the Go home page for more.
