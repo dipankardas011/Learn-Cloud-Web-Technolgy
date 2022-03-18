@@ -2,7 +2,13 @@ package main
 
 import (
 	"fmt"
+	"sync"
 )
+
+type webFinder struct {
+	urls map[string]bool
+	mx   sync.Mutex
+}
 
 type Fetcher interface {
 	// Fetch returns the body of URL and
@@ -10,15 +16,34 @@ type Fetcher interface {
 	Fetch(url string) (body string, urls []string, err error)
 }
 
+func (find *webFinder) IsThere(url string) (isThere bool) {
+	find.mx.Lock()
+	defer find.mx.Unlock()
+
+	_, isThere = find.urls[url]
+	return
+}
+
+func (find *webFinder) Insert(url string) {
+	find.mx.Lock()
+	defer find.mx.Unlock()
+
+	if find.urls == nil {
+		find.urls = make(map[string]bool)
+	}
+	find.urls[url] = true
+	return
+}
+
 // Crawl uses fetcher to recursively crawl
 // pages starting with url, to a maximum of depth.
-func Crawl(url string, depth int, fetcher Fetcher) {
-	// TODO: Fetch URLs in parallel.
-	// TODO: Don't fetch the same URL twice.
-	// This implementation doesn't do either:
-	if depth <= 0 {
+func (find *webFinder) Crawl(url string, depth int, fetcher Fetcher, wg *sync.WaitGroup) {
+	defer wg.Done()
+	if depth <= 0 || find.IsThere(url) {
 		return
 	}
+	find.Insert(url)
+
 	body, urls, err := fetcher.Fetch(url)
 	if err != nil {
 		fmt.Println(err)
@@ -26,13 +51,24 @@ func Crawl(url string, depth int, fetcher Fetcher) {
 	}
 	fmt.Printf("found: %s %q\n", url, body)
 	for _, u := range urls {
-		Crawl(u, depth-1, fetcher)
+		wg.Add(1)
+		go find.Crawl(u, depth-1, fetcher, wg)
 	}
 	return
 }
 
+func crawl() {
+	var wg sync.WaitGroup // wait function call was required so that when all the children have completed then only the parent can exit()
+	// as in go is a thread call so not wait only WaitGroup is there
+
+	wg.Add(1)
+	webfinder := &webFinder{urls: make(map[string]bool)}
+	go webfinder.Crawl("https://golang.org/", 4, fetcher, &wg)
+	wg.Wait() // all the thread have done then exit out
+}
+
 func main() {
-	Crawl("https://golang.org/", 4, fetcher)
+	crawl()
 }
 
 // fakeFetcher is Fetcher that returns canned results.
