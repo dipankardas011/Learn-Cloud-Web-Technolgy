@@ -385,7 +385,7 @@ The evaluation of f, x, y, and z happens in the current goroutine and the execut
 Goroutines run in the same address space, so access to shared memory must be synchronized. The sync package provides useful primitives, although you won't need them much in Go as there are other primitives. (See the next slide.)
 
 ## Buffered Channels
-![](MoreTypes/buffered%20Channel%20creating%20deadlock.png)
+![](Learning/MoreTypes/buffered%20Channel%20creating%20deadlock.png)
 
 ## Range and Close
 A sender can close a channel to indicate that no more values will be sent. Receivers can test whether a channel has been closed by assigning a second parameter to the receive expression: after
