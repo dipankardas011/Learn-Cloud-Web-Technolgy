@@ -350,3 +350,105 @@ Note: the Rectangle return value of the Bounds method is actually an image.Recta
 
 The color.Color and color.Model types are also interfaces, but we'll ignore that by using the predefined implementations color.
 RGBA and color.RGBAModel. These interfaces and types are specified by the image/color package
+
+## Channels
+Channels are a typed conduit through which you can send and receive values with the channel operator, <-.
+```go
+
+ch <- v    // Send v to channel ch.
+v := <-ch  // Receive from ch, and
+// assign value to v.
+```
+(The data flows in the direction of the arrow.)
+
+Like maps and slices, channels must be created before use:
+
+```go
+ch := make(chan int)
+
+```
+By default, sends and receives block until the other side is ready. This allows goroutines to synchronize without explicit locks or condition variables.
+
+The example code sums the numbers in a slice, distributing the work between two goroutines. Once both goroutines have completed their computation, it calculates the final result.
+
+## Goroutines
+A goroutine is a lightweight thread managed by the Go runtime.
+
+```go
+go f(x, y, z)
+//starts a new goroutine running
+
+f(x, y, z)
+```
+The evaluation of f, x, y, and z happens in the current goroutine and the execution of f happens in the new goroutine.
+
+Goroutines run in the same address space, so access to shared memory must be synchronized. The sync package provides useful primitives, although you won't need them much in Go as there are other primitives. (See the next slide.)
+
+## Buffered Channels
+![](MoreTypes/buffered%20Channel%20creating%20deadlock.png)
+
+## Range and Close
+A sender can close a channel to indicate that no more values will be sent. Receivers can test whether a channel has been closed by assigning a second parameter to the receive expression: after
+
+v, ok := <-ch
+ok is false if there are no more values to receive and the channel is closed.
+
+The loop for i := range c receives values from the channel repeatedly until it is closed.
+
+Note: Only the sender should close a channel, never the receiver. Sending on a closed channel will cause a panic.
+
+Another note: Channels aren't like files; you don't usually need to close them. Closing is only necessary when the receiver must be told there are no more values coming, such as to terminate a range loop.
+
+## Select
+The select statement lets a goroutine wait on multiple communication operations.
+
+A select blocks until one of its cases can run, then it executes that case. It chooses one at random if multiple are ready.
+
+## Default Selection
+The default case in a select is run if no other case is ready.
+
+Use a default case to try a send or receive without blocking:
+```go
+
+select {
+case i := <-c:
+// use i
+default:
+// receiving from c would block
+}
+
+```
+
+## Exercise: Equivalent Binary Trees
+There can be many different binary trees with the same sequence of values stored in it. For example, here are two binary trees storing the sequence 1, 1, 2, 3, 5, 8, 13.
+
+![](https://go.dev/tour/static/img/tree.png)
+A function to check whether two binary trees store the same sequence is quite complex in most languages. We'll use Go's concurrency and channels to write a simple solution.
+
+This example uses the tree package, which defines the type:
+```go
+
+type Tree struct {
+Left  *Tree
+Value int
+Right *Tree
+}
+Continue description on next page.
+
+
+```
+
+## sync.Mutex
+We've seen how channels are great for communication among goroutines.
+
+But what if we don't need communication? What if we just want to make sure only one goroutine can access a variable at a time to avoid conflicts?
+
+This concept is called mutual exclusion, and the conventional name for the data structure that provides it is mutex.
+
+Go's standard library provides mutual exclusion with sync.Mutex and its two methods:
+
+*Lock*
+*Unlock*
+We can define a block of code to be executed in mutual exclusion by surrounding it with a call to Lock and Unlock as shown on the Inc method.
+
+We can also use defer to ensure the mutex will be unlocked as in the Value method.
