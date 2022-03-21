@@ -2,6 +2,7 @@ package helper
 
 import (
 	"fmt"
+	"time"
 )
 
 type BankAccounts struct {
@@ -13,32 +14,35 @@ func (c *AccountHolder) Deposit(deposit float32) {
 	c.lock.Lock()
 	defer c.lock.Unlock()
 
-	c.balance += deposit
+	fmt.Printf("Deposit amount: %v\t<<<<< %v\n", deposit, time.Now())
+	c.Balance += deposit
 	return
 }
 
 func (c *AccountHolder) Error() string {
-	return fmt.Sprintf("Your Current Balance: %v is Insufficient!!!", c.balance)
+	return fmt.Sprintf("⚠️Your Current Balance is Insufficient!!!")
 }
 
-func (c *AccountHolder) Withdraw(amount float32) (amtRecieved float32, err error) {
+func (c *AccountHolder) Withdraw(amount float32) (amtReceived float32, err error) {
 	c.lock.Lock()
 	defer c.lock.Unlock()
-	if amount > c.balance {
-		return 0, err
+	fmt.Printf("Requested amount: %v\t<<<<< %v\n", amount, time.Now())
+
+	if amount > c.Balance {
+		return 0, &AccountHolder{}
 	}
-	amtRecieved = amount
-	c.balance -= amount
+	amtReceived = amount
+	c.Balance -= amount
 	return
 }
 
 func (fullC *BankAccounts) CheckBalance() {
 	fullC.Customer.lock.Lock()
 	defer fullC.Customer.lock.Unlock()
-	fmt.Println("@@ Your Account details @@")
-	fmt.Printf("NAME: %v\n", fullC.Customer.name)
-	fmt.Printf("ACCNO.: %v\n", fullC.Customer.accNumber)
-	fmt.Printf("AVIL_BAL: %v\n", fullC.Customer.balance)
-	fmt.Printf("BRANCH: %v\n", fullC.BankBranch)
-	fmt.Println("@@ ------- @@")
+	fmt.Printf("@@ YOUR ACCOUNT SUMMARY @@\t<<<<< %v\n", time.Now())
+	fmt.Printf("\tNAME: %v\n", fullC.Customer.Name)
+	fmt.Printf("\tACCNO.: %v\n", fullC.Customer.AccNumber)
+	fmt.Printf("\tAVIL_BAL: %v\n", fullC.Customer.Balance)
+	fmt.Printf("\tBRANCH: %v\n", fullC.BankBranch)
+	fmt.Printf("@@ ------- @@\n")
 }

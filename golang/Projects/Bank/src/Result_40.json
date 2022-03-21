@@ -1,0 +1,56 @@
+[
+  {
+    "ACCNO": 2000204324,
+    "NAME": "USR_1",
+    "AVIL_BAL": 40050,
+    "BRANCH": "PIPEL"
+  },
+  {
+    "ACCNO": 2000204326,
+    "NAME": "USR_4",
+    "AVIL_BAL": 4003330,
+    "BRANCH": "PIPEL"
+  },
+  {
+    "ACCNO": 2000204624,
+    "NAME": "USR_10",
+    "AVIL_BAL": 423450,
+    "BRANCH": "ORIG"
+  },
+  {
+    "ACCNO": 2000204684,
+    "NAME": "USR_6",
+    "AVIL_BAL": 4002450,
+    "BRANCH": "DBDBD"
+  },
+  {
+    "ACCNO": 2000206324,
+    "NAME": "USR_3",
+    "AVIL_BAL": 40012,
+    "BRANCH": "NEWSQR"
+  },
+  {
+    "ACCNO": 2002344324,
+    "NAME": "USR_9",
+    "AVIL_BAL": 50.021,
+    "BRANCH": "NEWSQR"
+  },
+  {
+    "ACCNO": 2002678424,
+    "NAME": "USR_5",
+    "AVIL_BAL": 21050,
+    "BRANCH": "NEWSQR"
+  },
+  {
+    "ACCNO": 2100204323,
+    "NAME": "USR_2",
+    "AVIL_BAL": 40053200,
+    "BRANCH": "DBDBD"
+  },
+  {
+    "ACCNO": 2110204324,
+    "NAME": "USR_8",
+    "AVIL_BAL": 40052300,
+    "BRANCH": "NEWSQR"
+  }
+]
