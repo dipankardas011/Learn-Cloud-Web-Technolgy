@@ -44,23 +44,22 @@ func main() {
 	for bankTimeWiseCustomer := 0; bankTimeWiseCustomer < 2; bankTimeWiseCustomer++ {
 		for customerX := 0; customerX < len(bankAccountData); customerX++ {
 			customerr := customerX
-			fmt.Printf("\nRequest no: %v\n\n", (customerr+1)*(bankTimeWiseCustomer+1))
-			go bankAccountData[customerr].CheckBalance()
-			go bankAccountData[customerr].Customer.Deposit(rand.Float32() * 100)
-			fmt.Println("✅ Successfully DEPOSITED!!")
-			// the withdrawal
-			flag := true
+			//bankAccountData[customerr].CheckBalance()
+
+			go func() {
+				err := bankAccountData[customerr].Customer.Deposit(rand.Float32() * 100)
+				if err != nil {
+					fmt.Println("Invalid Input")
+				}
+			}()
 			go func() {
 				_, err := bankAccountData[customerr].Customer.Withdraw(rand.Float32() * 5000)
 				if err != nil {
-					fmt.Println(err)
-					flag = false
+					fmt.Println("Invalid Input")
 				}
 			}()
-			if flag {
-				fmt.Println("✅ Successfully WITHDRAWN!!")
-			}
-			go bankAccountData[customerr].CheckBalance()
+
+			bankAccountData[customerr].CheckBalance()
 		}
 	}
 
