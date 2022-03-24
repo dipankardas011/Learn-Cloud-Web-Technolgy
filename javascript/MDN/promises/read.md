@@ -33,6 +33,11 @@ async function fetchProducts() {
 fetchProducts();
 ```
 
+Here we are calling await fetch(), and instead of getting a Promise, our caller gets back a fully complete Response object, just as if fetch() were a synchronous function!
+
+We can even use a try...catch block for error handling, exactly as we would if the code were synchronous.
+
+Note though that this magic only works inside the async function. Async functions always return a promise, so you can't do something like:
 ```js
 async function fetchProducts() {
   try {

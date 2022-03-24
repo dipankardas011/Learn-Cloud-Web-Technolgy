@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alarm</title>
+</head>
+
+<body>
+  <caption id="Name"> Name</caption>
+  <input type="text" id="name" name="name">
+  <br>
+  <br>
+  <br>
+  <caption id="delay"> Delay</caption>
+  <input type="text" id="delay" name="Delay">
+  <br>
+  <br>
+  <br>
+  <button id="set-alarm">Set alarm</button>
+  <div id="output"></div>
+
+  <script>
+    const name = document.querySelector('#name');
+    const delay = document.querySelector('#delay');
+    const button = document.querySelector('#set-alarm');
+    const output = document.querySelector('#output');
+
+    function alarm(person, delay) {
+      return new Promise((resolve, reject) => {
+        if (delay < 0) {
+          throw new Error('Alarm delay must not be negative');
+        }
+        window.setTimeout(() => {
+          resolve(`Wake up, ${person}!`);
+        }, delay);
+      });
+    }
+
+    // button.addEventListener('click', () => {
+    //   alarm(name.value, delay.value)
+    //     .then((message) => {output.textContent = message})
+    //     .catch((error) => {output.textContent = `Couldn't set alarm: ${error}`});
+    // });
+    button.addEventListener('click', async () => {
+      try {
+        const mess = await alarm(name.value, delay.value);
+        output.textContent = mess;
+      } catch (error) {
+        output.textContent = `Couldn't set alarm: ${error}`;
+      }
+    })
+  </script>
+</body>
+
+</html>
